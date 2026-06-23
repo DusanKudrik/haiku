@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Haiku Diary</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <!-- Main Menu -->
+    <section id="menu-screen" class="screen active">
+      <div class="card">
+        <h1>Haiku Diary</h1>
+        <p class="subtitle">A quiet place for tiny poems.</p>
+
+        <button id="new-haiku-button" class="primary-button">
+          Create New Haiku
+        </button>
+
+        <button id="read-haikus-button" class="secondary-button">
+          Read Previous Haikus
+        </button>
+      </div>
+    </section>
+
+    <!-- New Haiku Screen -->
+    <section id="new-haiku-screen" class="screen">
+      <div class="card">
+        <h2>New Haiku</h2>
+
+        <label for="haiku-title">Title</label>
+        <input
+          id="haiku-title"
+          type="text"
+          placeholder="Example: Rainy Morning"
+        />
+
+        <label for="line-one">Line 1 <span>5 syllables</span></label>
+        <input
+          id="line-one"
+          type="text"
+          placeholder="First line"
+        />
+
+        <label for="line-two">Line 2 <span>7 syllables</span></label>
+        <input
+          id="line-two"
+          type="text"
+          placeholder="Second line"
+        />
+
+        <label for="line-three">Line 3 <span>5 syllables</span></label>
+        <input
+          id="line-three"
+          type="text"
+          placeholder="Third line"
+        />
+
+        <p id="form-message" class="message"></p>
+
+        <button id="save-haiku-button" class="primary-button">
+          Save Haiku
+        </button>
+
+        <button id="back-from-new-button" class="secondary-button">
+          Back
+        </button>
+      </div>
+    </section>
+
+    <!-- Haiku List Screen -->
+    <section id="list-screen" class="screen">
+      <div class="card">
+        <h2>Previous Haikus</h2>
+
+        <div id="haiku-list" class="haiku-list"></div>
+
+        <button id="back-from-list-button" class="secondary-button">
+          Back
+        </button>
+      </div>
+    </section>
+
+    <!-- Haiku Detail Screen -->
+    <section id="detail-screen" class="screen">
+      <div class="card">
+        <h2 id="detail-title"></h2>
+        <p id="detail-date" class="date-text"></p>
+
+        <div class="poem">
+          <p id="detail-line-one"></p>
+          <p id="detail-line-two"></p>
+          <p id="detail-line-three"></p>
+        </div>
+
+        <button id="delete-haiku-button" class="danger-button">
+          Delete Haiku
+        </button>
+
+        <button id="back-from-detail-button" class="secondary-button">
+          Back to List
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
