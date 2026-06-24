@@ -16,11 +16,33 @@
       <p id="app-message-text" class="app-message-text"></p>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal-overlay hidden">
+      <div class="modal-card">
+        <h3>Delete this haiku?</h3>
+
+        <p>
+          This will remove the selected haiku from this device.
+          You can restore it later only if it exists in a backup file.
+        </p>
+
+        <div class="button-row">
+          <button id="cancel-delete-button" class="secondary-button">
+            Cancel
+          </button>
+
+          <button id="confirm-delete-button" class="danger-button">
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Main Menu -->
     <section id="menu-screen" class="screen active">
       <div class="card">
         <h1>Haiku Diary</h1>
-        <p class="subtitle">A quiet place for tiny poems.</p>
+        <p class="subtitle">A quiet, private place for tiny poems.</p>
 
         <button id="new-haiku-button" class="primary-button">
           Create New Haiku
@@ -30,12 +52,12 @@
           Read Previous Haikus
         </button>
 
-        <button id="about-button" class="secondary-button">
-          About
+        <button id="settings-button" class="secondary-button">
+          Settings
         </button>
 
-        <button id="theme-toggle-button" class="secondary-button">
-          Dark Mode
+        <button id="about-button" class="secondary-button">
+          About
         </button>
       </div>
     </section>
@@ -43,7 +65,10 @@
     <!-- New / Edit Haiku Screen -->
     <section id="new-haiku-screen" class="screen">
       <div class="card">
-        <h2 id="form-title">New Haiku</h2>
+        <div class="screen-header">
+          <p class="app-name-small">Haiku Diary</p>
+          <h2 id="form-title">New Haiku</h2>
+        </div>
 
         <label for="haiku-title">Title</label>
         <input
@@ -92,7 +117,10 @@
     <!-- Haiku List Screen -->
     <section id="list-screen" class="screen">
       <div class="card list-card">
-        <h2>Previous Haikus</h2>
+        <div class="screen-header">
+          <p class="app-name-small">Haiku Diary</p>
+          <h2>Previous Haikus</h2>
+        </div>
 
         <input
           id="search-input"
@@ -112,7 +140,11 @@
     <!-- Haiku Detail Screen -->
     <section id="detail-screen" class="screen">
       <div class="card">
-        <h2 id="detail-title"></h2>
+        <div class="screen-header">
+          <p class="app-name-small">Haiku Diary</p>
+          <h2 id="detail-title"></h2>
+        </div>
+
         <p id="detail-date" class="date-text"></p>
         <p id="detail-updated-date" class="date-text small-date"></p>
 
@@ -146,67 +178,116 @@
       </div>
     </section>
 
-    <!-- About Screen -->
-    <section id="about-screen" class="screen">
-      <div class="card">
-        <h2>About</h2>
+    <!-- Settings Screen -->
+    <section id="settings-screen" class="screen">
+      <div class="card settings-card">
+        <div class="screen-header">
+          <p class="app-name-small">Haiku Diary</p>
+          <h2>Settings</h2>
+        </div>
 
-        <div class="about-content">
-          <p>
-            <strong>Haiku Diary</strong> is a quiet place to save short poems,
-            small thoughts, and daily moments.
-          </p>
+        <div class="settings-scroll scroll-area">
+          <div class="settings-section">
+            <h3>Appearance</h3>
 
-          <p>
-            A traditional haiku is often written in three simple lines:
-          </p>
+            <p>
+              Choose the look that feels best for writing.
+            </p>
 
-          <div class="haiku-rule-card">
-            <p>5 syllables</p>
-            <p>7 syllables</p>
-            <p>5 syllables</p>
+            <button id="theme-toggle-button" class="primary-button">
+              Dark Mode
+            </button>
           </div>
 
-          <p>
-            Use it as a daily poem journal, a small memory keeper,
-            or a calm writing habit.
-          </p>
+          <div class="settings-section">
+            <h3>Backup</h3>
+
+            <p>
+              Export your haikus as a JSON file so you can save them,
+              move them to another device, or restore them later.
+            </p>
+
+            <button id="export-haikus-button" class="primary-button">
+              Export haikus
+            </button>
+
+            <button id="import-haikus-button" class="secondary-button">
+              Import haikus
+            </button>
+
+            <input
+              id="import-file-input"
+              class="hidden"
+              type="file"
+              accept=".json,application/json"
+            />
+          </div>
         </div>
 
-        <div class="backup-section">
-          <h3>Backup</h3>
-
-          <p>
-            Export your haikus as a JSON file so you can save them,
-            move them to another device, or restore them later.
-          </p>
-
-          <button id="export-haikus-button" class="primary-button">
-            Export haikus
-          </button>
-
-          <button id="import-haikus-button" class="secondary-button">
-            Import haikus
-          </button>
-
-          <input
-            id="import-file-input"
-            class="hidden"
-            type="file"
-            accept=".json,application/json"
-          />
-        </div>
-
-        <a
-          class="contact-button"
-          href="mailto:your-email@example.com?subject=Haiku%20Diary%20feedback"
-        >
-          Contact me
-        </a>
-
-        <button id="back-from-about-button" class="secondary-button">
+        <button id="back-from-settings-button" class="secondary-button fixed-bottom-button">
           Back
         </button>
+      </div>
+    </section>
+
+    <!-- About Screen -->
+    <section id="about-screen" class="screen">
+      <div class="card about-card">
+        <div class="screen-header">
+          <p class="app-name-small">Haiku Diary</p>
+          <h2>About</h2>
+        </div>
+
+        <div class="about-scroll scroll-area">
+          <div class="about-content">
+            <p>
+              <strong>Haiku Diary</strong> is a quiet place to save short poems,
+              small thoughts, and daily moments.
+            </p>
+
+            <p>
+              A traditional haiku is often written in three simple lines:
+            </p>
+
+            <div class="haiku-rule-card">
+              <p>5 syllables</p>
+              <p>7 syllables</p>
+              <p>5 syllables</p>
+            </div>
+
+            <p>
+              Use it as a daily poem journal, a small memory keeper,
+              or a calm writing habit.
+            </p>
+
+            <div class="privacy-section">
+              <h3>Private by design</h3>
+
+              <p>
+                Haiku Diary does not require an account. Your haikus are saved
+                on this device and are not uploaded anywhere by the app.
+              </p>
+
+              <p>
+                You can create your own backup file from Settings whenever you
+                want to move or restore your poems.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-actions">
+          <a
+            class="contact-button"
+            href="mailto:your-email@example.com?subject=Haiku%20Diary%20feedback"
+          >
+            Contact me
+          </a>
+
+          <button id="back-from-about-button" class="secondary-button">
+            Back
+          </button>
+        </div>
       </div>
     </section>
   </main>
