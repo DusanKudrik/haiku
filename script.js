@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const newHaikuButton = document.getElementById("new-haiku-button");
   const readHaikusButton = document.getElementById("read-haikus-button");
+  const createFromListButton = document.getElementById("create-from-list-button");
   const settingsButton = document.getElementById("settings-button");
   const aboutButton = document.getElementById("about-button");
   const themeToggleButton = document.getElementById("theme-toggle-button");
@@ -699,6 +700,10 @@ document.addEventListener("DOMContentLoaded", function () {
     clearSearch();
     renderHaikuList();
     showScreen(listScreen);
+  });
+
+  safeClick(createFromListButton, function () {
+    goToCreateHaiku();
   });
 
   safeClick(settingsButton, function () {
