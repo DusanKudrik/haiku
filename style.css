@@ -27,6 +27,8 @@
   --info-background: rgba(236, 231, 222, 0.96);
   --info-border: rgba(120, 100, 80, 0.25);
 
+  --modal-overlay-background: rgba(38, 34, 30, 0.42);
+
   --text-main: #2f2f2f;
   --text-muted: #666;
   --text-soft: #777;
@@ -77,6 +79,8 @@ body.dark-mode {
 
   --info-background: rgba(39, 38, 64, 0.96);
   --info-border: rgba(150, 130, 255, 0.28);
+
+  --modal-overlay-background: rgba(0, 0, 0, 0.62);
 
   --text-main: #f1efff;
   --text-muted: #b9b5d8;
@@ -147,7 +151,7 @@ body {
   width: calc(100% - 32px);
   max-width: 420px;
   transform: translateX(-50%);
-  z-index: 20;
+  z-index: 30;
 
   background: var(--message-background);
   border: 1px solid var(--message-border);
@@ -200,6 +204,56 @@ body {
   }
 }
 
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: var(--modal-overlay-background);
+  backdrop-filter: blur(5px);
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 20px 40px var(--card-shadow);
+  animation: modalPopIn 0.2s ease;
+}
+
+.modal-card h3 {
+  margin-bottom: 12px;
+}
+
+.modal-card p {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  text-align: center;
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .card {
   background: var(--card-background);
   border: 1px solid var(--card-border);
@@ -212,7 +266,9 @@ body {
   overflow-y: auto;
 }
 
-.list-card {
+.list-card,
+.about-card,
+.settings-card {
   height: 85vh;
   display: flex;
   flex-direction: column;
@@ -240,8 +296,29 @@ body {
   border-radius: 999px;
 }
 
-.fixed-bottom-button {
+.fixed-bottom-button,
+.about-actions {
   flex-shrink: 0;
+}
+
+.about-actions {
+  padding-top: 8px;
+}
+
+.screen-header {
+  text-align: center;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--card-border);
+  flex-shrink: 0;
+}
+
+.app-name-small {
+  margin: 0 0 5px;
+  color: var(--text-soft);
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 h1,
@@ -260,6 +337,10 @@ h2 {
   font-size: 30px;
   margin-bottom: 18px;
   flex-shrink: 0;
+}
+
+.screen-header h2 {
+  margin-bottom: 0;
 }
 
 h3 {
@@ -433,17 +514,36 @@ button:active,
   font-size: 13px;
 }
 
-.empty-text {
+.empty-state-card {
+  background: var(--poem-card-background);
+  border: 1px solid var(--poem-card-border);
+  border-radius: 18px;
+  padding: 26px 18px;
+  margin: 18px 0;
+  box-shadow: 0 10px 24px var(--poem-card-shadow);
   text-align: center;
-  color: var(--text-soft);
-  font-style: italic;
-  padding: 20px 0;
+}
+
+.empty-state-title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: var(--text-main);
+}
+
+.empty-state-text {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.empty-state-card button {
+  margin-top: 0;
 }
 
 .date-text {
   text-align: center;
   color: var(--text-soft);
-  margin-top: -12px;
+  margin-top: -8px;
   margin-bottom: 8px;
   font-size: 14px;
 }
@@ -456,7 +556,8 @@ button:active,
 
 .poem-card,
 .haiku-rule-card,
-.backup-section {
+.privacy-section,
+.settings-section {
   background: var(--poem-card-background);
   border: 1px solid var(--poem-card-border);
   border-radius: 18px;
@@ -485,18 +586,20 @@ button:active,
 }
 
 .about-content p,
-.backup-section p {
+.privacy-section p,
+.settings-section p {
   margin: 0 0 16px;
 }
 
-.backup-section {
-  margin: 22px 0;
-}
-
-.backup-section p {
+.privacy-section p,
+.settings-section p {
   color: var(--text-muted);
   line-height: 1.55;
   text-align: center;
+}
+
+.settings-section {
+  margin: 0 0 22px;
 }
 
 .haiku-rule-card {
@@ -521,7 +624,9 @@ button:active,
     max-height: 90vh;
   }
 
-  .list-card {
+  .list-card,
+  .about-card,
+  .settings-card {
     height: 90vh;
   }
 
@@ -533,14 +638,36 @@ button:active,
     font-size: 26px;
   }
 
+  .app-name-small {
+    font-size: 13px;
+  }
+
+  .screen-header {
+    margin-bottom: 20px;
+    padding-bottom: 13px;
+  }
+
+  .modal-card {
+    padding: 22px;
+  }
+
   .poem {
     font-size: 20px;
   }
 
   .poem-card,
-  .backup-section {
+  .privacy-section,
+  .settings-section {
     padding: 22px 14px;
     margin: 24px 0;
+  }
+
+  .empty-state-card {
+    padding: 24px 14px;
+  }
+
+  .settings-section {
+    margin-top: 0;
   }
 
   .button-row {
