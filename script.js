@@ -3,14 +3,20 @@ document.addEventListener("DOMContentLoaded", function () {
   const newHaikuScreen = document.getElementById("new-haiku-screen");
   const listScreen = document.getElementById("list-screen");
   const detailScreen = document.getElementById("detail-screen");
+  const settingsScreen = document.getElementById("settings-screen");
   const aboutScreen = document.getElementById("about-screen");
 
   const appMessageCard = document.getElementById("app-message-card");
   const appMessageTitle = document.getElementById("app-message-title");
   const appMessageText = document.getElementById("app-message-text");
 
+  const deleteModal = document.getElementById("delete-modal");
+  const cancelDeleteButton = document.getElementById("cancel-delete-button");
+  const confirmDeleteButton = document.getElementById("confirm-delete-button");
+
   const newHaikuButton = document.getElementById("new-haiku-button");
   const readHaikusButton = document.getElementById("read-haikus-button");
+  const settingsButton = document.getElementById("settings-button");
   const aboutButton = document.getElementById("about-button");
   const themeToggleButton = document.getElementById("theme-toggle-button");
 
@@ -18,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const backFromListButton = document.getElementById("back-from-list-button");
   const backFromDetailButton = document.getElementById("back-from-detail-button");
   const homeFromDetailButton = document.getElementById("home-from-detail-button");
+  const backFromSettingsButton = document.getElementById("back-from-settings-button");
   const backFromAboutButton = document.getElementById("back-from-about-button");
 
   const saveHaikuButton = document.getElementById("save-haiku-button");
@@ -73,12 +80,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 4200);
   }
 
+  function showDeleteModal() {
+    if (deleteModal) {
+      deleteModal.classList.remove("hidden");
+    }
+  }
+
+  function hideDeleteModal() {
+    if (deleteModal) {
+      deleteModal.classList.add("hidden");
+    }
+  }
+
   function showScreen(screenToShow) {
     const screens = [
       menuScreen,
       newHaikuScreen,
       listScreen,
       detailScreen,
+      settingsScreen,
       aboutScreen
     ];
 
@@ -145,6 +165,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (themeToggleButton) {
         themeToggleButton.textContent = "Dark Mode";
       }
+
+      showAppMessage(
+        "info",
+        "Light mode on",
+        "Your appearance setting has been saved."
+      );
     } else {
       document.body.classList.add("dark-mode");
       localStorage.setItem("theme", "dark");
@@ -152,6 +178,12 @@ document.addEventListener("DOMContentLoaded", function () {
       if (themeToggleButton) {
         themeToggleButton.textContent = "Light Mode";
       }
+
+      showAppMessage(
+        "info",
+        "Dark mode on",
+        "Your appearance setting has been saved."
+      );
     }
   }
 
@@ -222,6 +254,11 @@ document.addEventListener("DOMContentLoaded", function () {
     if (searchInput) {
       searchInput.value = "";
     }
+  }
+
+  function goToCreateHaiku() {
+    resetFormToCreateMode();
+    showScreen(newHaikuScreen);
   }
 
   function saveFormHaiku() {
@@ -333,6 +370,36 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  function createEmptyState(title, text, showCreateButton) {
+    const emptyStateCard = document.createElement("div");
+    emptyStateCard.className = "empty-state-card";
+
+    const emptyStateTitle = document.createElement("p");
+    emptyStateTitle.className = "empty-state-title";
+    emptyStateTitle.textContent = title;
+
+    const emptyStateText = document.createElement("p");
+    emptyStateText.className = "empty-state-text";
+    emptyStateText.textContent = text;
+
+    emptyStateCard.appendChild(emptyStateTitle);
+    emptyStateCard.appendChild(emptyStateText);
+
+    if (showCreateButton) {
+      const createButton = document.createElement("button");
+      createButton.className = "primary-button";
+      createButton.textContent = "Create New Haiku";
+
+      createButton.addEventListener("click", function () {
+        goToCreateHaiku();
+      });
+
+      emptyStateCard.appendChild(createButton);
+    }
+
+    return emptyStateCard;
+  }
+
   function renderHaikuList() {
     if (!haikuList) {
       return;
@@ -345,18 +412,32 @@ document.addEventListener("DOMContentLoaded", function () {
     haikuList.innerHTML = "";
 
     if (allHaikus.length === 0) {
-      const emptyText = document.createElement("p");
-      emptyText.className = "empty-text";
-      emptyText.textContent = "No haikus yet. Write the first tiny masterpiece.";
-      haikuList.appendChild(emptyText);
+      if (searchInput) {
+        searchInput.classList.add("hidden");
+      }
+
+      const emptyState = createEmptyState(
+        "No haikus yet",
+        "Your first tiny poem is waiting. Write a small moment before it flies away.",
+        true
+      );
+
+      haikuList.appendChild(emptyState);
       return;
     }
 
+    if (searchInput) {
+      searchInput.classList.remove("hidden");
+    }
+
     if (haikus.length === 0 && searchTerm !== "") {
-      const emptyText = document.createElement("p");
-      emptyText.className = "empty-text";
-      emptyText.textContent = "No haikus match your search.";
-      haikuList.appendChild(emptyText);
+      const emptyState = createEmptyState(
+        "No matching haikus",
+        "Nothing matched that search. Try a title, a season, a date, or a word from the poem.",
+        false
+      );
+
+      haikuList.appendChild(emptyState);
       return;
     }
 
@@ -433,14 +514,17 @@ document.addEventListener("DOMContentLoaded", function () {
     showScreen(newHaikuScreen);
   }
 
-  function deleteSelectedHaiku() {
+  function requestDeleteSelectedHaiku() {
     if (selectedHaikuId === null) {
       return;
     }
 
-    const userConfirmed = confirm("Delete this haiku?");
+    showDeleteModal();
+  }
 
-    if (!userConfirmed) {
+  function confirmDeleteSelectedHaiku() {
+    if (selectedHaikuId === null) {
+      hideDeleteModal();
       return;
     }
 
@@ -455,6 +539,7 @@ document.addEventListener("DOMContentLoaded", function () {
     selectedHaikuId = null;
     editMode = false;
 
+    hideDeleteModal();
     renderHaikuList();
     showScreen(listScreen);
 
@@ -607,14 +692,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   safeClick(newHaikuButton, function () {
-    resetFormToCreateMode();
-    showScreen(newHaikuScreen);
+    goToCreateHaiku();
   });
 
   safeClick(readHaikusButton, function () {
     clearSearch();
     renderHaikuList();
     showScreen(listScreen);
+  });
+
+  safeClick(settingsButton, function () {
+    showScreen(settingsScreen);
   });
 
   safeClick(aboutButton, function () {
@@ -659,13 +747,23 @@ document.addEventListener("DOMContentLoaded", function () {
     showScreen(menuScreen);
   });
 
+  safeClick(backFromSettingsButton, function () {
+    showScreen(menuScreen);
+  });
+
   safeClick(backFromAboutButton, function () {
     showScreen(menuScreen);
   });
 
   safeClick(saveHaikuButton, saveFormHaiku);
 
-  safeClick(deleteHaikuButton, deleteSelectedHaiku);
+  safeClick(deleteHaikuButton, requestDeleteSelectedHaiku);
+
+  safeClick(cancelDeleteButton, function () {
+    hideDeleteModal();
+  });
+
+  safeClick(confirmDeleteButton, confirmDeleteSelectedHaiku);
 
   safeClick(editHaikuButton, startEditingSelectedHaiku);
 
