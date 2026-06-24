@@ -10,6 +10,12 @@
 </head>
 <body>
   <main class="app">
+    <!-- App Message Card -->
+    <div id="app-message-card" class="app-message-card hidden">
+      <p id="app-message-title" class="app-message-title"></p>
+      <p id="app-message-text" class="app-message-text"></p>
+    </div>
+
     <!-- Main Menu -->
     <section id="menu-screen" class="screen active">
       <div class="card">
@@ -23,18 +29,27 @@
         <button id="read-haikus-button" class="secondary-button">
           Read Previous Haikus
         </button>
+
+        <button id="about-button" class="secondary-button">
+          About
+        </button>
+
+        <button id="theme-toggle-button" class="secondary-button">
+          Dark Mode
+        </button>
       </div>
     </section>
 
-    <!-- New Haiku Screen -->
+    <!-- New / Edit Haiku Screen -->
     <section id="new-haiku-screen" class="screen">
       <div class="card">
-        <h2>New Haiku</h2>
+        <h2 id="form-title">New Haiku</h2>
 
         <label for="haiku-title">Title</label>
         <input
           id="haiku-title"
           type="text"
+          maxlength="40"
           placeholder="Example: Rainy Morning"
         />
 
@@ -42,6 +57,7 @@
         <input
           id="line-one"
           type="text"
+          maxlength="60"
           placeholder="First line"
         />
 
@@ -49,6 +65,7 @@
         <input
           id="line-two"
           type="text"
+          maxlength="60"
           placeholder="Second line"
         />
 
@@ -56,6 +73,7 @@
         <input
           id="line-three"
           type="text"
+          maxlength="60"
           placeholder="Third line"
         />
 
@@ -73,12 +91,19 @@
 
     <!-- Haiku List Screen -->
     <section id="list-screen" class="screen">
-      <div class="card">
+      <div class="card list-card">
         <h2>Previous Haikus</h2>
 
-        <div id="haiku-list" class="haiku-list"></div>
+        <input
+          id="search-input"
+          class="search-input"
+          type="text"
+          placeholder="Search haikus..."
+        />
 
-        <button id="back-from-list-button" class="secondary-button">
+        <div id="haiku-list" class="haiku-list scroll-area"></div>
+
+        <button id="back-from-list-button" class="secondary-button fixed-bottom-button">
           Back
         </button>
       </div>
@@ -89,19 +114,98 @@
       <div class="card">
         <h2 id="detail-title"></h2>
         <p id="detail-date" class="date-text"></p>
+        <p id="detail-updated-date" class="date-text small-date"></p>
 
-        <div class="poem">
-          <p id="detail-line-one"></p>
-          <p id="detail-line-two"></p>
-          <p id="detail-line-three"></p>
+        <div class="poem-card">
+          <div class="poem">
+            <p id="detail-line-one"></p>
+            <p id="detail-line-two"></p>
+            <p id="detail-line-three"></p>
+          </div>
         </div>
 
-        <button id="delete-haiku-button" class="danger-button">
-          Delete Haiku
-        </button>
+        <div class="button-row">
+          <button id="edit-haiku-button" class="primary-button">
+            Edit
+          </button>
 
-        <button id="back-from-detail-button" class="secondary-button">
-          Back to List
+          <button id="delete-haiku-button" class="danger-button">
+            Delete
+          </button>
+        </div>
+
+        <div class="button-row">
+          <button id="back-from-detail-button" class="secondary-button">
+            Back to List
+          </button>
+
+          <button id="home-from-detail-button" class="secondary-button">
+            Home
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Screen -->
+    <section id="about-screen" class="screen">
+      <div class="card">
+        <h2>About</h2>
+
+        <div class="about-content">
+          <p>
+            <strong>Haiku Diary</strong> is a quiet place to save short poems,
+            small thoughts, and daily moments.
+          </p>
+
+          <p>
+            A traditional haiku is often written in three simple lines:
+          </p>
+
+          <div class="haiku-rule-card">
+            <p>5 syllables</p>
+            <p>7 syllables</p>
+            <p>5 syllables</p>
+          </div>
+
+          <p>
+            Use it as a daily poem journal, a small memory keeper,
+            or a calm writing habit.
+          </p>
+        </div>
+
+        <div class="backup-section">
+          <h3>Backup</h3>
+
+          <p>
+            Export your haikus as a JSON file so you can save them,
+            move them to another device, or restore them later.
+          </p>
+
+          <button id="export-haikus-button" class="primary-button">
+            Export haikus
+          </button>
+
+          <button id="import-haikus-button" class="secondary-button">
+            Import haikus
+          </button>
+
+          <input
+            id="import-file-input"
+            class="hidden"
+            type="file"
+            accept=".json,application/json"
+          />
+        </div>
+
+        <a
+          class="contact-button"
+          href="mailto:your-email@example.com?subject=Haiku%20Diary%20feedback"
+        >
+          Contact me
+        </a>
+
+        <button id="back-from-about-button" class="secondary-button">
+          Back
         </button>
       </div>
     </section>
