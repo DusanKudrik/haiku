@@ -49,7 +49,7 @@
         </button>
 
         <button id="read-haikus-button" class="secondary-button">
-          Read Previous Haikus
+          My Haikus
         </button>
 
         <button id="settings-button" class="secondary-button">
@@ -119,19 +119,19 @@
       <div class="card list-card">
         <div class="screen-header">
           <p class="app-name-small">Haiku Diary</p>
-          <h2>Previous Haikus</h2>
+          <h2>My Haikus</h2>
         </div>
 
         <input
           id="search-input"
           class="search-input"
           type="text"
-          placeholder="Search haikus..."
+          placeholder="Search my haikus..."
         />
 
         <div id="haiku-list" class="haiku-list scroll-area"></div>
 
-        <div class="button-row fixed-bottom-button">
+        <div class="list-actions fixed-bottom-button">
           <button id="create-from-list-button" class="primary-button">
             Create Haiku
           </button>
@@ -186,33 +186,32 @@
 
     <!-- Settings Screen -->
     <section id="settings-screen" class="screen">
-      <div class="card settings-card">
+      <div class="card settings-card-flat">
         <div class="screen-header">
           <p class="app-name-small">Haiku Diary</p>
           <h2>Settings</h2>
         </div>
 
-        <div class="settings-scroll scroll-area">
-          <div class="settings-section">
-            <h3>Appearance</h3>
+        <div class="settings-section-flat">
+          <h3>Appearance</h3>
 
-            <p>
-              Choose the look that feels best for writing.
-            </p>
+          <p>
+            Choose the look of the app.
+          </p>
 
-            <button id="theme-toggle-button" class="primary-button">
-              Dark Mode
-            </button>
-          </div>
+          <button id="theme-toggle-button" class="primary-button">
+            Dark Mode
+          </button>
+        </div>
 
-          <div class="settings-section">
-            <h3>Backup</h3>
+        <div class="settings-section-flat">
+          <h3>Backup</h3>
 
-            <p>
-              Export your haikus as a JSON file so you can save them,
-              move them to another device, or restore them later.
-            </p>
+          <p>
+            Save or move your haikus with a JSON backup file.
+          </p>
 
+          <div class="button-row backup-button-row">
             <button id="export-haikus-button" class="primary-button">
               Export haikus
             </button>
@@ -220,17 +219,17 @@
             <button id="import-haikus-button" class="secondary-button">
               Import haikus
             </button>
-
-            <input
-              id="import-file-input"
-              class="hidden"
-              type="file"
-              accept=".json,application/json"
-            />
           </div>
+
+          <input
+            id="import-file-input"
+            class="hidden"
+            type="file"
+            accept=".json,application/json"
+          />
         </div>
 
-        <button id="back-from-settings-button" class="secondary-button fixed-bottom-button">
+        <button id="back-from-settings-button" class="secondary-button">
           Back
         </button>
       </div>
