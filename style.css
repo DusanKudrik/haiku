@@ -267,12 +267,15 @@ body {
 }
 
 .list-card,
-.about-card,
-.settings-card {
+.about-card {
   height: 85vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.settings-card-flat {
+  overflow-y: visible;
 }
 
 .scroll-area {
@@ -442,6 +445,14 @@ button:active,
   flex: 1;
 }
 
+.list-actions {
+  padding-top: 4px;
+}
+
+.backup-button-row {
+  margin-top: 4px;
+}
+
 .primary-button {
   background: var(--primary-button-background);
   color: var(--primary-button-text);
@@ -478,7 +489,7 @@ button:active,
 }
 
 .haiku-list {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .haiku-item {
@@ -556,8 +567,7 @@ button:active,
 
 .poem-card,
 .haiku-rule-card,
-.privacy-section,
-.settings-section {
+.privacy-section {
   background: var(--poem-card-background);
   border: 1px solid var(--poem-card-border);
   border-radius: 18px;
@@ -579,6 +589,23 @@ button:active,
   word-break: break-word;
 }
 
+.settings-section-flat {
+  margin-bottom: 26px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.settings-section-flat:last-of-type {
+  margin-bottom: 18px;
+}
+
+.settings-section-flat p {
+  margin: 0 0 14px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  text-align: center;
+}
+
 .about-content {
   color: var(--text-main);
   line-height: 1.65;
@@ -586,20 +613,14 @@ button:active,
 }
 
 .about-content p,
-.privacy-section p,
-.settings-section p {
+.privacy-section p {
   margin: 0 0 16px;
 }
 
-.privacy-section p,
-.settings-section p {
+.privacy-section p {
   color: var(--text-muted);
   line-height: 1.55;
   text-align: center;
-}
-
-.settings-section {
-  margin: 0 0 22px;
 }
 
 .haiku-rule-card {
@@ -625,8 +646,7 @@ button:active,
   }
 
   .list-card,
-  .about-card,
-  .settings-card {
+  .about-card {
     height: 90vh;
   }
 
@@ -656,8 +676,7 @@ button:active,
   }
 
   .poem-card,
-  .privacy-section,
-  .settings-section {
+  .privacy-section {
     padding: 22px 14px;
     margin: 24px 0;
   }
@@ -666,8 +685,9 @@ button:active,
     padding: 24px 14px;
   }
 
-  .settings-section {
-    margin-top: 0;
+  .settings-section-flat {
+    margin-bottom: 24px;
+    padding-bottom: 20px;
   }
 
   .button-row {
